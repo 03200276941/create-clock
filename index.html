@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modern Analog Watch</title>
+  <style>
+    /* Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      color: #fff;
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
+      transition: background 1s ease;
+    }
+
+    .container {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .clock {
+      position: relative;
+      width: 350px;
+      height: 350px;
+      border: 15px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      background: radial-gradient(circle, #f0f0f0, #ccc);
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+      margin: 0 auto;
+    }
+
+    .hand {
+      position: absolute;
+      background: #333;
+      transform-origin: bottom center;
+      border-radius: 5px;
+      transition: transform 0.5s cubic-bezier(0.4, 2.3, 0.6, 1);
+    }
+
+    .hour-hand {
+      width: 10px;
+      height: 90px;
+      top: 80px;
+      left: 170px;
+      background: #555;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .minute-hand {
+      width: 8px;
+      height: 130px;
+      top: 50px;
+      left: 171px;
+      background: #777;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .second-hand {
+      width: 4px;
+      height: 140px;
+      top: 40px;
+      left: 173px;
+      background: #ff4444;
+      box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+    }
+
+    .center-circle {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #333;
+      border-radius: 50%;
+      top: 165px;
+      left: 165px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .number {
+      position: absolute;
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      font-family: 'Orbitron', sans-serif;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .number1 { top: 20px; left: 240px; }
+    .number2 { top: 70px; left: 280px; }
+    .number3 { top: 150px; left: 300px; }
+    .number4 { top: 230px; left: 280px; }
+    .number5 { top: 280px; left: 240px; }
+    .number6 { top: 300px; left: 160px; }
+    .number7 { top: 280px; left: 80px; }
+    .number8 { top: 230px; left: 30px; }
+    .number9 { top: 150px; left: 10px; }
+    .number10 { top: 70px; left: 30px; }
+    .number11 { top: 20px; left: 80px; }
+    .number12 { top: 10px; left: 160px; }
+
+    .digital-clock {
+      margin-top: 30px;
+      font-size: 2.5em;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .date-display {
+      margin-top: 20px;
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .weather-display {
+      margin-top: 10px;
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .credit {
+      margin-top: 20px;
+      font-size: 0.9em;
+      font-weight: bold;
+      color: rgba(255, 255, 255, 0.8);
+      font-family: 'Montserrat', sans-serif;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="clock">
+      <div class="hand hour-hand" id="hour-hand"></div>
+      <div class="hand minute-hand" id="minute-hand"></div>
+      <div class="hand second-hand" id="second-hand"></div>
+      <div class="center-circle"></div>
+      <!-- Clock numbers (1 to 12) -->
+      <div class="number number1">1</div>
+      <div class="number number2">2</div>
+      <div class="number number3">3</div>
+      <div class="number number4">4</div>
+      <div class="number number5">5</div>
+      <div class="number number6">6</div>
+      <div class="number number7">7</div>
+      <div class="number number8">8</div>
+      <div class="number number9">9</div>
+      <div class="number number10">10</div>
+      <div class="number number11">11</div>
+      <div class="number number12">12</div>
+    </div>
+    <div class="digital-clock" id="digital-clock"></div>
+    <div class="date-display" id="date-display"></div>
+    <div class="weather-display" id="weather-display">☀️ 24°C</div>
+    <!-- Credit Section -->
+    <div class="credit">Created by Muhammad Bakhtawar Khan</div>
+  </div>
+
+  <script>
+    // Clock Functionality
+    function updateClock() {
+      const now = new Date();
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+      const seconds = now.getSeconds();
+
+      const hourHand = document.getElementById('hour-hand');
+      const minuteHand = document.getElementById('minute-hand');
+      const secondHand = document.getElementById('second-hand');
+      const digitalClock = document.getElementById('digital-clock');
+      const dateDisplay = document.getElementById('date-display');
+      const weatherDisplay = document.getElementById('weather-display');
+
+      // Calculate degrees for each hand
+      const hourDeg = (hours % 12 * 30) + (minutes * 0.5);
+      const minuteDeg = (minutes * 6) + (seconds * 0.1);
+      const secondDeg = seconds * 6;
+
+      // Apply rotation to the hands
+      hourHand.style.transform = `rotate(${hourDeg}deg)`;
+      minuteHand.style.transform = `rotate(${minuteDeg}deg)`;
+      secondHand.style.transform = `rotate(${secondDeg}deg)`;
+
+      // Update digital clock
+      const timeString = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+      digitalClock.textContent = timeString;
+
+      // Update date display
+      const dateString = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+      dateDisplay.textContent = dateString;
+
+      // Change background and Sun/Moon icon based on the hour
+      if (hours >= 6 && hours < 18) {
+        document.body.style.background = 'linear-gradient(135deg, #4facfe, #00f2fe)';
+        weatherDisplay.textContent = '☀️ 24°C';
+      } else {
+        document.body.style.background = 'linear-gradient(135deg, #1e3c72, #2a5298)';
+        weatherDisplay.textContent = '🌙 18°C';
+      }
+    }
+
+    // Initialize the clock immediately
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
+</body>
+</html>
