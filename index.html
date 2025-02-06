@@ -208,12 +208,22 @@
       dateDisplay.textContent = dateString;
 
       // Change background and Sun/Moon icon based on the hour
-      if (hours >= 6 && hours < 18) {
+      if (hours >= 6 && hours < 12) {
+        // Morning (6 AM - 12 PM)
         document.body.style.background = 'linear-gradient(135deg, #4facfe, #00f2fe)';
-        weatherDisplay.textContent = '☀️ 24°C';
+        weatherDisplay.textContent = '🌅 Morning';
+      } else if (hours >= 12 && hours < 18) {
+        // Afternoon (12 PM - 6 PM)
+        document.body.style.background = 'linear-gradient(135deg, #ff7e5f, #feb47b)';
+        weatherDisplay.textContent = '☀️ Afternoon';
+      } else if (hours >= 18 && hours < 21) {
+        // Evening (6 PM - 9 PM)
+        document.body.style.background = 'linear-gradient(135deg, #ff6f61, #ffcc99)';
+        weatherDisplay.textContent = '🌆 Evening';
       } else {
+        // Night (9 PM - 6 AM)
         document.body.style.background = 'linear-gradient(135deg, #1e3c72, #2a5298)';
-        weatherDisplay.textContent = '🌙 18°C';
+        weatherDisplay.textContent = '🌙 Night';
       }
     }
 
