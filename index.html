@@ -3,148 +3,165 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Modern Analog Watch</title>
-  <style>
-    /* Google Fonts */
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+<style>
+  /* Google Fonts */
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      font-family: 'Montserrat', sans-serif;
-      color: #fff;
-      background: linear-gradient(135deg, #4facfe, #00f2fe);
-      transition: background 1s ease;
+  :root {
+    /* Responsive base sizes */
+    --clock-size: min(80vw, 350px); /* Scales down on small screens */
+    --hand-thickness: calc(var(--clock-size) * 0.02);
+    --font-scale: calc(var(--clock-size) / 25);
+  }
+
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Full viewport height */
+    margin: 0;
+    padding: 20px; /* Prevents edge touching */
+    font-family: 'Montserrat', sans-serif;
+    color: #fff;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    transition: background 1s ease;
+  }
+
+  .container {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 5%;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 500px; /* Limits width on tablets */
+  }
+
+  .clock {
+    position: relative;
+    width: var(--clock-size);
+    height: var(--clock-size);
+    border: calc(var(--clock-size) * 0.04) solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    background: radial-gradient(circle, #f0f0f0, #ccc);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+    margin: 0 auto;
+  }
+
+  .hand {
+    position: absolute;
+    background: #333;
+    transform-origin: bottom center;
+    border-radius: 5px;
+    transition: transform 0.5s cubic-bezier(0.4, 2.3, 0.6, 1);
+    left: 50%;
+  }
+
+  .hour-hand {
+    width: var(--hand-thickness);
+    height: calc(var(--clock-size) * 0.25);
+    top: calc(50% - (var(--clock-size) * 0.25));
+    transform: translateX(-50%);
+    background: #555;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+
+  .minute-hand {
+    width: calc(var(--hand-thickness) * 0.8);
+    height: calc(var(--clock-size) * 0.35);
+    top: calc(50% - (var(--clock-size) * 0.35));
+    transform: translateX(-50%);
+    background: #777;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+
+  .second-hand {
+    width: calc(var(--hand-thickness) * 0.4);
+    height: calc(var(--clock-size) * 0.4);
+    top: calc(50% - (var(--clock-size) * 0.4));
+    transform: translateX(-50%);
+    background: #ff4444;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+  }
+
+  .center-circle {
+    position: absolute;
+    width: calc(var(--clock-size) * 0.06);
+    height: calc(var(--clock-size) * 0.06);
+    background: #333;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+
+  .number {
+    position: absolute;
+    font-size: calc(var(--font-scale) * 1.2);
+    font-weight: bold;
+    color: #333;
+    font-family: 'Orbitron', sans-serif;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    transform: translate(-50%, -50%);
+  }
+
+  /* Clock numbers positioning (responsive trigonometry) */
+  .number1 { top: 10%; left: 75%; }
+  .number2 { top: 25%; left: 90%; }
+  .number3 { top: 50%; left: 100%; transform: translate(-50%, -50%); }
+  .number4 { top: 75%; left: 90%; }
+  .number5 { top: 90%; left: 75%; }
+  .number6 { top: 100%; left: 50%; transform: translate(-50%, -50%); }
+  .number7 { top: 90%; left: 25%; }
+  .number8 { top: 75%; left: 10%; }
+  .number9 { top: 50%; left: 0%; transform: translate(-50%, -50%); }
+  .number10 { top: 25%; left: 10%; }
+  .number11 { top: 10%; left: 25%; }
+  .number12 { top: 0%; left: 50%; transform: translate(-50%, -50%); }
+
+  .digital-clock {
+    margin-top: calc(var(--clock-size) * 0.1);
+    font-size: calc(var(--font-scale) * 2.5);
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+    font-family: 'Orbitron', sans-serif;
+  }
+
+  .date-display, .weather-display {
+    margin-top: calc(var(--clock-size) * 0.05);
+    font-size: calc(var(--font-scale) * 1.2);
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .credit {
+    margin-top: calc(var(--clock-size) * 0.1);
+    font-size: calc(var(--font-scale) * 0.8);
+    opacity: 0.8;
+  }
+
+  /* Mobile-specific adjustments */
+  @media (max-width: 600px) {
+    :root {
+      --clock-size: 70vw; /* Larger relative size on small screens */
     }
-
-    .container {
-      text-align: center;
-      background: rgba(255, 255, 255, 0.1);
-      padding: 30px;
-      border-radius: 20px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
-    }
-
-    .clock {
-      position: relative;
-      width: 350px;
-      height: 350px;
-      border: 15px solid rgba(255, 255, 255, 0.2);
-      border-radius: 50%;
-      background: radial-gradient(circle, #f0f0f0, #ccc);
-      box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
-      margin: 0 auto;
-    }
-
-    .hand {
-      position: absolute;
-      background: #333;
-      transform-origin: bottom center;
-      border-radius: 5px;
-      transition: transform 0.5s cubic-bezier(0.4, 2.3, 0.6, 1);
-    }
-
-    .hour-hand {
-      width: 10px;
-      height: 90px;
-      top: 80px;
-      left: 170px;
-      background: #555;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    }
-
-    .minute-hand {
-      width: 8px;
-      height: 130px;
-      top: 50px;
-      left: 171px;
-      background: #777;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    }
-
-    .second-hand {
-      width: 4px;
-      height: 140px;
-      top: 40px;
-      left: 173px;
-      background: #ff4444;
-      box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
-    }
-
-    .center-circle {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: #333;
-      border-radius: 50%;
-      top: 165px;
-      left: 165px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    }
-
     .number {
-      position: absolute;
-      font-size: 24px;
-      font-weight: bold;
-      color: #333;
-      font-family: 'Orbitron', sans-serif;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      font-size: calc(var(--font-scale) * 1); /* Slightly smaller numbers */
     }
+  }
 
-    .number1 { top: 20px; left: 240px; }
-    .number2 { top: 70px; left: 280px; }
-    .number3 { top: 150px; left: 300px; }
-    .number4 { top: 230px; left: 280px; }
-    .number5 { top: 280px; left: 240px; }
-    .number6 { top: 300px; left: 160px; }
-    .number7 { top: 280px; left: 80px; }
-    .number8 { top: 230px; left: 30px; }
-    .number9 { top: 150px; left: 10px; }
-    .number10 { top: 70px; left: 30px; }
-    .number11 { top: 20px; left: 80px; }
-    .number12 { top: 10px; left: 160px; }
-
+  @media (max-width: 400px) {
     .digital-clock {
-      margin-top: 30px;
-      font-size: 2.5em;
-      font-weight: bold;
-      color: #fff;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
-      font-family: 'Orbitron', sans-serif;
+      font-size: calc(var(--font-scale) * 2); /* Smaller digital clock */
     }
-
-    .date-display {
-      margin-top: 20px;
-      font-size: 1.5em;
-      font-weight: bold;
-      color: #fff;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
-      font-family: 'Montserrat', sans-serif;
-    }
-
-    .weather-display {
-      margin-top: 10px;
-      font-size: 1.2em;
-      font-weight: bold;
-      color: #fff;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
-      font-family: 'Montserrat', sans-serif;
-    }
-
-    .credit {
-      margin-top: 20px;
-      font-size: 0.9em;
-      font-weight: bold;
-      color: rgba(255, 255, 255, 0.8);
-      font-family: 'Montserrat', sans-serif;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
   <div class="container">
